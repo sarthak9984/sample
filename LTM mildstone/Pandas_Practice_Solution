@@ -102,4 +102,210 @@ def location_summary(employee_df):
         AverageSalary=('Salary', 'mean')
     )
 
-# ==========================
+# ==============================================================================================
+#===============================================================================================
+# 🚀 Pandas Cheat Sheet (Exam Revision)
+
+## 📂 Read File
+df = pd.read_csv("file.csv")
+```
+# 👀 Check Data
+df.head()
+df.tail()
+df.info()
+df.shape
+df.columns
+```
+
+# 🧹 Data Cleaning
+## Remove Duplicates
+df = df.drop_duplicates()
+
+## Missing Values
+df.fillna(0)
+```
+df['Salary'] = df['Salary'].fillna(df['Salary'].mean())
+```
+## Check Missing Values
+df.isnull().sum()
+```
+# 🔄 Data Type Conversion
+## Single Column
+df['Age'] = df['Age'].astype(int)
+```
+## Multiple Columns
+df[['Age','Salary']] = df[['Age','Salary']].astype(int)
+```
+
+# 🔍 Filtering
+## Greater Than
+df[df['Salary'] > 50000]
+
+## Greater Than Equal
+df[df['Experience'] >= 5]
+```
+
+## Less Than
+df[df['Stock'] < 20]
+```
+
+## Multiple Conditions
+df[
+    (df['Salary'] > 50000)
+    &
+    (df['Experience'] >= 3)
+]
+```-----------------------------
+# ➕ Create New Column
+df['Total'] = df['Qty'] * df['Price']
+```
+
+df['Bonus'] = df['Salary'] * 0.1
+```-------------------------------
+
+# 🎯 Apply Function
+def func(x):
+    return x * 2
+
+df['NewCol'] = df['Col'].apply(func)
+```
+
+### Salary Band Example
+
+def get_band(salary):
+
+    if salary >= 70000:
+        return "High"
+    elif salary >= 60000:
+        return "Medium"
+    else:
+        return "Low"
+df['Band'] = df['Salary'].apply(get_band)
+```
+-------------------------------------
+
+# 📊 Group By
+df.groupby('Department')
+```
+---
+# 📈 Aggregation
+
+df.groupby('Department').agg(
+    AvgSalary=('Salary','mean'),
+    MaxSalary=('Salary','max'),
+    MinSalary=('Salary','min'),
+    EmployeeCount=('EmpID','count')
+)
+```
+------------------------------------
+# 🔥 Aggregate Functions
+
+| Function | Meaning        |
+| -------- | -------------- |
+| sum()    | Total          |
+| mean()   | Average        |
+| max()    | Highest        |
+| min()    | Lowest         |
+| count()  | Number of Rows |
+
+Example:
+df['Salary'].mean()
+```
+
+-------------------------------
+# 🔗 Merge / Join
+pd.merge(
+    df1,
+    df2,
+    on='ID'
+)
+```
+SQL Equivalent:
+INNER JOIN
+```
+------------------------------
+# 📋 Sorting
+
+## Ascending
+df.sort_values(by='Salary')
+```
+
+## Descending
+df.sort_values(by='Salary',ascending=False)
+```
+----------------------------------------
+
+# 🏆 Top Records
+## Highest
+df.nlargest(3,'Salary')
+```
+## Lowest
+df.nsmallest(3,'Salary')
+```
+--------------------------------
+
+# 📍 loc
+```python
+df.loc[df['Salary'] > 60000,'Band'] = 'High'
+```
+
+---------------------------------
+# 🎲 Unique Values
+
+df['Department'].unique()
+```
+df['Department'].nunique()
+```
+df['Department'].value_counts()
+```
+-----------------------------------
+# ✏ Rename Column
+
+df.rename(columns={'Salary':'Income'})
+```
+---
+
+# ⭐ Exam Pattern Recognition
+
+### Remove Duplicate
+drop_duplicates()
+```
+
+### Missing Value
+fillna()
+```
+
+### Average
+mean()
+```
+### Top N Records
+nlargest()
+```
+
+### Group Report
+ agg()
+```
+
+### Combine Two Tables
+merge()
+
+### New Column Based on Condition
+apply()
+```
+### Filter Data
+df[condition]
+```
+--------------------------------
+# 🎯 10 Functions = 90% Questions
+pd.read_csv()
+fillna()
+drop_duplicates()
+astype()
+apply()
+groupby()
+agg()
+merge()
+sort_values()
+nlargest()
+```
+
