@@ -1,0 +1,105 @@
+# pandas_practice.pdf quest -Project 1 — Inventory Management Analytics 
+
+import pandas as pd
+# Task 1
+def load_and_clean_inventory(inventory_path):
+    inventory_df = pd.read_csv(inventory_path)
+    inventory_df = inventory_df.drop_duplicates()
+    inventory_df['Stock'] = inventory_df['Stock'].fillna(0)
+    inventory_df['Stock'] = inventory_df['Stock'].astype(int)
+    return inventory_df
+
+# Task 2
+def low_stock_products(inventory_df, threshold):
+    return inventory_df[inventory_df['Stock'] < threshold]
+
+# Task 3
+def calculate_inventory_value(inventory_df):
+    inventory_df['InventoryValue'] = (inventory_df['Stock'] * inventory_df['Price'])
+    return inventory_df
+
+# Task 4
+def category_summary(inventory_df):
+    summary = inventory_df.groupby('Category').agg(
+        TotalStock=('Stock', 'sum'),
+        AveragePrice=('Price', 'mean'),
+        TotalInventoryValue=('InventoryValue', 'sum')
+    )
+    return summary
+
+# Task 5
+def merge_supplier_details(inventory_df, supplier_df):
+    merged_df = pd.merge(
+        inventory_df,
+        supplier_df,
+        on='SupplierID'
+    )
+    return merged_df
+
+# Task 6
+def top_inventory_products(inventory_df, n):
+    return inventory_df.nlargest(n,'InventoryValue' )
+
+
+
+# ===========================================================================================
+# Project 2 — HR Employee Analytics System 
+
+import pandas as pd
+# Task 1
+def clean_employee_data(employee_path):
+    employee_df = pd.read_csv(employee_path)
+
+    # Remove duplicate rows
+    employee_df = employee_df.drop_duplicates()
+
+    # Fill missing Salary with average salary
+    employee_df['Salary'] = employee_df['Salary'].fillna(employee_df['Salary'].mean())
+
+    # Fill missing Experience with 0
+    employee_df['Experience'] = employee_df['Experience'].fillna(0)
+
+    # Convert to numeric type
+    employee_df[['Salary', 'Experience']]  =  employee_df[['Salary', 'Experience']].astype(int)
+
+    return employee_df
+
+# Task 2
+def department_salary_report(employee_df):
+    return employee_df.groupby('Department').agg(
+        AvgSalary=('Salary', 'mean'),
+        MaxSalary=('Salary', 'max'),
+        MinSalary=('Salary', 'min'),
+        EmployeeCount=('EmpID', 'count')
+    )
+
+# Task 3
+def experienced_employees(employee_df, min_exp):
+    return employee_df[ employee_df['Experience'] >= min_exp ]
+
+# Task 4
+def salary_band(employee_df):
+
+    def get_band(salary):
+        if salary >= 70000:
+            return 'High'
+        elif salary >= 60000:
+            return 'Medium'
+        else:
+            return 'Low'
+
+    employee_df['SalaryBand'] = employee_df['Salary'].apply(get_band)
+    return employee_df
+
+# Task 5
+def top_paid_employees(employee_df, n):
+    return employee_df.nlargest(n, 'Salary')
+
+# Task 6
+def location_summary(employee_df):
+    return employee_df.groupby('Location').agg(
+        EmployeeCount=('EmpID', 'count'),
+        AverageSalary=('Salary', 'mean')
+    )
+
+# ==========================
