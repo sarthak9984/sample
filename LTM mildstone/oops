@@ -1,0 +1,270 @@
+
+1. **Normal Dictionary**
+2. **Dictionary of Dictionary**
+3. **Dictionary of Lists**
+-------------------------------------
+
+# 1) Normal Dictionary Question
+## **Question 1: Expense Tracker**
+Design a Python class named **`ExpenseTracker`**.
+### **Class Requirement**
+  
+The class should store expenses in a dictionary where:
+* **key** = category name
+* **value** = total amount spent in that category
+Example:
+### **Methods to Implement**
+
+#### 1. `__init__(self, expenses=None)`
+* If a dictionary is given, store it.
+* Otherwise, create an empty dictionary.
+
+#### 2. `add_expense(self, category, amount)`
+* Add a new expense.
+* If the category already exists, add the amount to the existing value.
+* Otherwise, create a new category.
+
+#### 3. `get_total(self)`
+* Return the total expense of all categories.
+* If no expense exists, return `0`.
+
+#### 4. `highest_category(self)`
+* Return the category name with the highest expense.
+* If the dictionary is empty, return an empty string.
+
+#### 5. `categories_above(self, threshold)`
+* Return a list of category names whose expense is **strictly greater than** `threshold`.
+* Return the list in **alphabetical order**.
+# 1) Normal Dictionary — ExpenseTracker
+
+```python
+class ExpenseTracker:
+    def __init__(self, expenses=None):
+        if expenses is not None:
+            self.expenses = expenses
+        else:
+            self.expenses = {}
+
+    def add_expense(self, category, amount):
+        if category in self.expenses:
+            self.expenses[category] += amount
+        else:
+            self.expenses[category] = amount
+        return self.expenses
+
+    def get_total(self):
+        if not self.expenses:
+            return 0
+        return sum(self.expenses.values())
+
+    def highest_category(self):
+        if not self.expenses:
+            return ""
+        return max(self.expenses, key=self.expenses.get)
+
+    def categories_above(self, threshold):
+        result = []
+
+        for category, amount in self.expenses.items():
+            if amount > threshold:
+                result.append(category)
+
+        return sorted(result)
+
+***=======================================================================================================
+***
+
+# 2) Dictionary of Dictionary Question
+## **Question 2: Inventory Management System**
+
+Design a Python class named **`InventoryManagementSystem`**.
+### **Class Requirement**
+The class should store inventory in a **nested dictionary** where:
+
+* **key** = product name
+* **value** = another dictionary with:
+  * `quantity`
+  * `price`
+
+### **Methods to Implement**
+
+#### 1. `__init__(self, inventory=None)`
+* If a dictionary is given, store it.
+* Otherwise, create an empty dictionary.
+
+#### 2. `add_product(self, product, quantity, price)`
+* Add a new product.
+* If the product already exists, replace its quantity and price with the new values.
+
+#### 3. `update_stock(self, product, quantity)`
+* Increase the product’s quantity by the given amount.
+* If the product does not exist, do nothing.
+
+#### 4. `inventory_value(self)`
+* Return the total inventory value.
+* For each product, value = `quantity * price`
+* Return the sum of all products.
+
+#### 5. `low_stock_products(self, threshold)`
+* Return a list of product names whose quantity is **strictly less than** `threshold`.
+
+#### 6. `most_stocked_product(self)`
+* Return the product name with the highest quantity.
+* If inventory is empty, return an empty string.
+
+#### 7. `total_products(self)`
+* Return the number of unique products in the inventory.
+# 2) Dictionary of Dictionary — InventoryManagementSystem
+
+```python
+class InventoryManagementSystem:
+    def __init__(self, inventory=None):
+        if inventory is not None:
+            self.inventory = inventory
+        else:
+            self.inventory = {}
+
+    def add_product(self, product, quantity, price):
+        self.inventory[product] = {
+            "quantity": quantity,
+            "price": price
+        }
+        return self.inventory
+
+    def update_stock(self, product, quantity):
+        if product in self.inventory:
+            self.inventory[product]["quantity"] += quantity
+        return self.inventory
+
+    def inventory_value(self):
+        total = 0
+
+        for details in self.inventory.values():
+            total += details["quantity"] * details["price"]
+
+        return total
+
+    def low_stock_products(self, threshold):
+        result = []
+
+        for product, details in self.inventory.items():
+            if details["quantity"] < threshold:
+                result.append(product)
+
+        return result
+
+    def most_stocked_product(self):
+        if not self.inventory:
+            return ""
+
+        return max(self.inventory, key=lambda product: self.inventory[product]["quantity"])
+
+    def total_products(self):
+        return len(self.inventory)
+```
+
+
+***===========================================================================
+
+# 3) Dictionary of Lists Question
+## **Question 3: Employee Attendance System**
+
+Design a Python class named **`EmployeeAttendanceSystem`**.
+
+### **Class Requirement**
+
+The class should store attendance in a dictionary where:
+
+* **key** = employee name
+* **value** = list of attendance statuses (`"P"` or `"A"`)
+
+***
+### **Methods to Implement**
+
+#### 1. `__init__(self, attendance=None)`
+* If a dictionary is given, store it.
+* Otherwise, create an empty dictionary.
+
+#### 2. `add_attendance(self, employee, status)`
+* Add one attendance status for the given employee.
+* If the employee does not exist, create a new list first.
+* Then append the status.
+
+#### 3. `perfect_attendance(self)`
+* Return a list of employee names whose records contain **no `"A"`**.
+
+#### 4. `absent_count(self, employee)`
+* Return how many times the given employee was marked `"A"`.
+* If employee is not found, return `0`.
+
+#### 5. `attendance_percentage(self)`
+* Return a dictionary where:
+  * key = employee name
+  * value = attendance percentage
+* Formula:
+
+```python
+(present_days / total_days) * 100
+```
+
+* Round the percentage to **2 decimal places**.
+
+#### 6. `highest_attendance_employee(self)`
+* Return the employee name with the highest attendance percentage.
+* If multiple employees are tied, return the first one encountered.
+
+***
+# 3) Dictionary of Lists — EmployeeAttendanceSystem
+
+```python
+class EmployeeAttendanceSystem:
+    def __init__(self, attendance=None):
+        if attendance is not None:
+            self.attendance = attendance
+        else:
+            self.attendance = {}
+
+    def add_attendance(self, employee, status):
+        if employee not in self.attendance:
+            self.attendance[employee] = []
+
+        self.attendance[employee].append(status)
+        return self.attendance
+
+    def perfect_attendance(self):
+        result = []
+
+        for employee, records in self.attendance.items():
+            if "A" not in records:
+                result.append(employee)
+
+        return result
+
+    def absent_count(self, employee):
+        if employee not in self.attendance:
+            return 0
+
+        return self.attendance[employee].count("A")
+
+    def attendance_percentage(self):
+        percentages = {}
+
+        for employee, records in self.attendance.items():
+            total_days = len(records)
+            present_days = records.count("P")
+
+            if total_days == 0:
+                percentages[employee] = 0.0
+            else:
+                percentages[employee] = round((present_days / total_days) * 100, 2)
+
+        return percentages
+
+    def highest_attendance_employee(self):
+        percentages = self.attendance_percentage()
+
+        if not percentages:
+            return ""
+
+        return max(percentages, key=percentages.get)
+```
