@@ -7,8 +7,7 @@ Implement six Python functions using Pandas to analyze vehicle and rental transa
 * **`Vehicles.csv`**: Contains `VehicleID`, `VehicleName`, `Brand`, and `Category`.
 * **`RentalLog.csv`**: Contains `RentalID`, `CustomerID`, `VehicleID`, `PickupDate`, and `DropoffDate`.
 ---
-
-## Functions to Implement
+## Functions to Implement-->>>>>
 
 ### Function 1: `load_data(vehicles_path, rentals_path)`
 * **Logic**: Read both CSV files using `pd.read_csv`.
