@@ -3,7 +3,8 @@
 You are tasked with building an EnergyAnalyzer class that processes, validates, metrics-analyzes, and formats household or industrial electricity consumption data. The energy data is passed around and manipulated primarily using standard Python lists and NumPy arrays representing hourly or daily usage values in kilowatt-hours (kWh).
 ------------------------------
 
-## Class Requirements## Method 1: create_usage_array
+## Class Requirements
+## Method 1: create_usage_array
 
 * Signature: def create_usage_array(self, usage_list)
 * Description: Converts a standard Python list of numerical energy values into a structured NumPy array.
