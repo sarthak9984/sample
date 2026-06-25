@@ -14,7 +14,8 @@ Implement six Python functions using Pandas to analyze vehicle and rental transa
 * **Returns**: A tuple of two DataFrames: `(vehicles_df, rentals_df)`
 
 ### Function 2: `clean_and_convert(rentals_df)`
-* **Logic**: Remove leading and trailing whitespace from text columns using `.str.strip()`. Convert `PickupDate` and `DropoffDate` to datetime using `pd.to_datetime()`.
+* **Logic**: Remove leading and trailing whitespace from text columns using `.str.strip()`.
+    Convert `PickupDate` and `DropoffDate` to datetime using `pd.to_datetime()`.
 * **Returns**: Cleaned `rentals_df`
 
 ### Function 3: `merge_data(vehicles_df, rentals_df)`
@@ -22,7 +23,8 @@ Implement six Python functions using Pandas to analyze vehicle and rental transa
 * **Returns**: Merged DataFrame
 
 ### Function 4: `add_rental_duration(merged_df)`
-* **Logic**: Calculate `DropoffDate - PickupDate`. Extract days using `.dt.days` and store the result in a new column named `RentalDuration`.
+* **Logic**: Calculate `DropoffDate - PickupDate`.
+   Extract days using `.dt.days` and store the result in a new column named `RentalDuration`.
 * **Returns**: Updated DataFrame with `RentalDuration`
 
 ### Function 5: `compute_summary(updated_df)`
@@ -34,7 +36,8 @@ Implement six Python functions using Pandas to analyze vehicle and rental transa
   * `"avg_duration"`: Average rental duration rounded to 1 decimal place
 
 ### Function 6: `filter_long_rentals(merged_df, threshold=10)`
-* **Logic**: Create a boolean mask `merged_df["RentalDuration"] >= threshold`. Filter the DataFrame and return matching `RentalID` values as a Python list.
+* **Logic**: Create a boolean mask `merged_df["RentalDuration"] >= threshold`. 
+    Filter the DataFrame and return matching `RentalID` values as a Python list.
 * **Returns**: List of strings (e.g., `["R003", "R007", ...]`)
 
 ---
